@@ -1,0 +1,64 @@
+[package]
+name = "oicq-bridge"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+# async
+tokio = { version = "1.18.2", features = ["full"] }
+tokio-util = { version = "0.7.2", features = ["codec"] }
+futures = "0.3.21"
+smol = "1.2.5"
+
+
+# serde
+serde = "1.0.137"
+serde_json = "1.0.81"
+serde_yaml = "0.8.24"
+serde_cbor = "0.11.2"
+serde_bytes = "0.11.6"
+yaml-rust = "0.4.5"
+
+# config
+educe = { version = "0.4.19", default-features = false, features = ["Default"] }
+linked-hash-map = "0.5.4"
+automatic-config = { branch = "master", git = "https://github.com/Itsusinn/automatic-config-rs.git" }
+# automatic-config = { path = "/code/automatic-config-rs" }
+
+# tools
+once_cell = "1.12.0"
+singleton = { branch = "master", git = "https://github.com/Itsusinn/singleton-rs.git" }
+regex = "1.5.6"
+anyhow = "1.0.57"
+time = { version = "0.3.10", features = ["macros", "local-offset"] }
+rand = "0.8.5"
+chrono = "0.4.19"
+percent-encoding = "2.1.0"
+lateinit = { branch = "master", git = "https://github.com/Itsusinn/lateinit-rs.git" }
+derive_builder = "0.11.2"
+
+# data
+arcstr = { version = "1.1.4",features = ["serde"] }
+bytes = "1.1.0"
+sqlx = { version ="0.6.0",features = ["runtime-tokio-rustls","postgres"] }
+
+# network
+reqwest = "0.11.10"
+
+# logging
+tracing-subscriber = { version = "0.3.11", features = ["fmt","local-time"] }
+tracing = "0.1.34"
+
+# bridge
+ricq = "0.1.12"
+# matrix-sdk = { path="libs/matrix-rust-sdk/crates/matrix-sdk",features = ["appservice"] }
+matrix-sdk-appservice = { path = "libs/matrix-rust-sdk/crates/matrix-sdk-appservice" }
+
+[profile.release]
+opt-level = 'z'
+debug = false
+lto = true
+incremental = false
+codegen-units = 1
+strip = true

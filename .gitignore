@@ -1,0 +1,6 @@
+/target/
+**/*.rs.bk
+/data
+/config
+/dev-tools/docker/*/*
+!/dev-tools/docker/*/docker-compose.yml

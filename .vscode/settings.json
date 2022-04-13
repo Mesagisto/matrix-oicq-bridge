@@ -1,0 +1,10 @@
+{
+    "editor.semanticTokenColorCustomizations": {
+        "rules": {
+            "*.unsafe:rust": "#eb5046"
+        }
+    },
+    // "rust-analyzer.diagnostics.disabled": [
+    //     "unresolved-proc-macro"
+    // ]
+}
