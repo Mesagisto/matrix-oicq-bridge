@@ -1,7 +1,8 @@
+use std::{path::Path, sync::Arc};
+
 use arcstr::ArcStr;
 use rand::SeedableRng;
 use ricq::{LoginResponse, QRCodeState};
-use std::{path::Path, sync::Arc};
 use tracing::info;
 
 pub async fn login(
@@ -151,7 +152,7 @@ pub async fn passwd(client: Arc<ricq::Client>, oicq_id: i64, pass: ArcStr) {
         tracing::info!("verify_url: {:?}", verify_url);
         tracing::info!("手机打开url, 处理完成后重启程序");
         std::process::exit(0);
-        //也可以走短信验证
+        // 也可以走短信验证
         // resp = client.request_sms().await.expect("failed to request sms");
       }
       LoginResponse::NeedCaptcha(ricq::LoginNeedCaptcha {

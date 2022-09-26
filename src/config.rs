@@ -1,5 +1,4 @@
-use arcstr::literal;
-use arcstr::ArcStr;
+use arcstr::{literal, ArcStr};
 
 #[config_derive]
 #[derive(AutomaticConfig)]

@@ -1,6 +1,5 @@
 use std::{collections::VecDeque, process::Output, vec};
 
-use crate::matrix::appservice::{MATRIX_APPSERVICE, MATRIX_BOT};
 use arcstr::ArcStr;
 use futures::{
   future::BoxFuture,
@@ -8,6 +7,8 @@ use futures::{
   Future, FutureExt, Stream, StreamExt,
 };
 use ricq::client;
+
+use crate::matrix::appservice::{MATRIX_APPSERVICE, MATRIX_BOT};
 
 pub async fn register(client: &client::Client) -> anyhow::Result<()> {
   let users = client.get_friend_list().await?.friends;
@@ -39,14 +40,14 @@ pub struct OicqUserInfo {
 }
 
 pub async fn register_rooms() {}
-pub async fn register_users(users: Vec<OicqUserInfo>) -> Vec<anyhow::Result<()>>{
-  users.into_iter()
+pub async fn register_users(users: Vec<OicqUserInfo>) -> Vec<anyhow::Result<()>> {
+  users
+    .into_iter()
     .map(register_user)
     .collect::<FuturesUnordered<_>>()
     .collect::<Vec<_>>()
     .await
 }
 pub async fn register_user(user: OicqUserInfo) -> anyhow::Result<()> {
-  
   Ok(())
 }

@@ -1,8 +1,9 @@
-use crate::config::CONFIG;
 use data::DATABASE_POOL;
 use sqlx::{postgres::PgPoolOptions, Database, Pool};
 use tracing::{warn, Level};
 use tracing_subscriber::{prelude::__tracing_subscriber_SubscriberExt, util::SubscriberInitExt};
+
+use crate::config::CONFIG;
 
 pub mod bridge;
 pub mod config;

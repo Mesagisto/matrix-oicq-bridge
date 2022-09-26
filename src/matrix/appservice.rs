@@ -7,10 +7,7 @@ use matrix_sdk_appservice::{
     event_handler::Ctx,
     room::Room,
     ruma::{
-      api::{
-        appservice::Namespace,
-        appservice::{Namespaces, Registration, RegistrationInit},
-      },
+      api::appservice::{Namespace, Namespaces, Registration, RegistrationInit},
       events,
       events::room::member::{MembershipState, OriginalSyncRoomMemberEvent},
       UserId,
@@ -19,14 +16,14 @@ use matrix_sdk_appservice::{
   },
   ruma::{
     api::client::message::send_message_event::v3::Request as SendMessageRequest,
-    events::room::message::RoomMessageEventContent, TransactionId,
+    events::room::message::{RoomMessageEventContent, SyncRoomMessageEvent},
+    MilliSecondsSinceUnixEpoch, TransactionId, UInt,
   },
-  ruma::{events::room::message::SyncRoomMessageEvent, MilliSecondsSinceUnixEpoch, UInt},
   AppService, AppServiceRegistration,
 };
+use tracing::trace;
 
 use crate::CONFIG;
-use tracing::trace;
 
 static BOT_NAME: LateInit<ArcStr> = LateInit::new();
 
@@ -42,7 +39,10 @@ pub async fn handle_room_member(
     trace!("not an appservice user: {}", event.state_key);
   } else if let MembershipState::Invite = event.content.membership {
     let user_id = UserId::parse(event.state_key.as_str())?;
-    let client = appservice.virtual_user_client(user_id.localpart()).await?;
+    let client = appservice
+      .virtual_user_builder(user_id.localpart())
+      .build()
+      .await?;
     client.join_room_by_id(room.room_id()).await?;
   }
 
